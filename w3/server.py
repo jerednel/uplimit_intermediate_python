@@ -34,7 +34,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 # health check API
-@app.get("/health")
+@app.get("/health", status_code=200)
 async def get() -> Dict:
     """
     should send a JSON response in the below format:
@@ -42,7 +42,7 @@ async def get() -> Dict:
     """
 
     ######################################## YOUR CODE HERE ##################################################
-
+    return {"status": "ok"}
     ######################################## YOUR CODE HERE ##################################################
 
 
@@ -53,7 +53,7 @@ async def get() -> HTMLResponse:
     should render the HTML file - index.html when a user goes to http://127.0.0.1:8000/
     """
     ######################################## YOUR CODE HERE ##################################################
-
+    return HTMLResponse('index.html')
     ######################################## YOUR CODE HERE ##################################################
 
 
@@ -64,5 +64,7 @@ async def get() -> List[ProcessStatus]:
     Get all the records from the process table and return it using the pydantic model ProcessStatus
     """
     ######################################## YOUR CODE HERE ##################################################
-
+    db = DB()
+    results = db.read_all()
+    return [ProcessStatus(**p) for p in results]
     ######################################## YOUR CODE HERE ##################################################
